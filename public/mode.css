@@ -1,0 +1,226 @@
+/* ============================================================================
+   FAITH LEARNING CENTRE — appearance modes and the header controls
+   Light is the default look (white surfaces, onyx type). Switching the header
+   theme control to dark repaints the whole public website onto the supplied
+   onyx palette: near-black #0d0c0e pages, #151215 cards, hairlines #2b2830,
+   off-white #f5f5f2 type and the same crimson accent. Nothing is saved on the
+   server, so a visitor's choice never changes the school's official colours.
+   Every rule below is scoped to :root[data-mode="dark"], so the light site is
+   untouched.
+   ========================================================================= */
+
+/* ------------------------------- dark tokens ------------------------------ */
+:root[data-mode="dark"] {
+  color-scheme: dark;
+  --paper: #0d0c0e;            /* the page itself            */
+  --white: #151215;            /* cards and panels raise off it */
+  --slate-100: #1b181c;        /* raised / hovered surface   */
+  --ink: #f5f5f2;              /* body copy                  */
+  --line: #2b2830;             /* hairlines                  */
+  --hairline: #2b2830;
+  --hairline-strong: #3b3841;
+  --slate-300: #3b3841;
+  --slate-400: #96959a;
+  --slate-500: #b9b8bd;
+  --slate-700: #d9d8dc;
+  --navy-950: #f7f6f3;         /* type that was onyx-on-white becomes off-white */
+  --navy-900: #f5f5f2;
+  --grain: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0));
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.5), 0 16px 40px -32px rgba(0, 0, 0, 0.9);
+  --shadow-lift: 0 34px 74px -44px rgba(0, 0, 0, 0.85), 0 4px 10px -8px rgba(0, 0, 0, 0.6);
+}
+:root[data-mode="dark"] body.public-site {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* ------------------- chrome that stays dark in both modes ----------------- */
+:root[data-mode="dark"] .site-splash { background: #060608; }
+:root[data-mode="dark"] .site-footer,
+:root[data-mode="dark"] .hx-footer,
+:root[data-mode="dark"] .d6 .hx-footer { background: #08070a; }
+:root[data-mode="dark"] .site-header.scrolled {
+  background: rgba(13, 12, 14, 0.96);
+  border-bottom-color: var(--line);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.55);
+}
+:root[data-mode="dark"] .hx-header,
+:root[data-mode="dark"] .d3-nav { background: rgba(13, 12, 14, 0.96); border-bottom-color: var(--line); }
+:root[data-mode="dark"] .hs-header:not(.dark):not(.stay-dark) { background: rgba(13, 12, 14, 0.96); border-bottom-color: var(--line); }
+:root[data-mode="dark"] .d8-band { background: linear-gradient(180deg, #3a1119, #0d0c0e); }
+:root[data-mode="dark"] .about-media-card,
+:root[data-mode="dark"] .d8-top { background: #08070a; }
+:root[data-mode="dark"] .hx-table th,
+:root[data-mode="dark"] .program-tab.active,
+:root[data-mode="dark"] .login-tab.active,
+:root[data-mode="dark"] .design-num,
+:root[data-mode="dark"] .back-top { background: #141316; }
+:root[data-mode="dark"] .d8-photo figcaption,
+:root[data-mode="dark"] .d7-photo figcaption,
+:root[data-mode="dark"] .hx-shot figcaption { background: #141316; }
+
+/* ------------- light surfaces written with literal white (#fff) ----------- */
+:root[data-mode="dark"] .hx-nav a:hover,
+:root[data-mode="dark"] .d3-nav a:hover,
+:root[data-mode="dark"] .hs-nav a:hover,
+:root[data-mode="dark"] .hs-tab:hover,
+:root[data-mode="dark"] .hs-actions .btn-ghost-light:hover,
+:root[data-mode="dark"] .site-header.scrolled .site-nav-link:hover,
+:root[data-mode="dark"] .site-header.scrolled .btn-ghost-light:hover,
+:root[data-mode="dark"] .hx-btn-outline:hover,
+:root[data-mode="dark"] .hx-table tr:hover td,
+:root[data-mode="dark"] .hs-table tr:hover td { background: #1b181c; }
+:root[data-mode="dark"] .hs-burger,
+:root[data-mode="dark"] .hs-chip,
+:root[data-mode="dark"] .hs-panel-facts,
+:root[data-mode="dark"] .hs-panel-side,
+:root[data-mode="dark"] .hs-life-card,
+:root[data-mode="dark"] .hs-term,
+:root[data-mode="dark"] .hs-events,
+:root[data-mode="dark"] .hs-notices,
+:root[data-mode="dark"] .hs-table-wrap,
+:root[data-mode="dark"] .hs-step,
+:root[data-mode="dark"] .hs-require,
+:root[data-mode="dark"] .hs-enquiry,
+:root[data-mode="dark"] .hs-contact-card,
+:root[data-mode="dark"] .d7-quick-head,
+:root[data-mode="dark"] .d8-brief,
+:root[data-mode="dark"] .d8-brief-card,
+:root[data-mode="dark"] .d8-life,
+:root[data-mode="dark"] .terms-scroll,
+:root[data-mode="dark"] .login-hint,
+:root[data-mode="dark"] .designs-note,
+:root[data-mode="dark"] .hx-form-card,
+:root[data-mode="dark"] .enquiry-card { background: #151215; }
+:root[data-mode="dark"] .hx-form-card,
+:root[data-mode="dark"] .enquiry-card { background-image: none; }
+
+/* ------------------ copy that stays off-white on dark chrome -------------- */
+:root[data-mode="dark"] :is(
+  .site-brand, .site-nav-link:hover, .btn-ghost-light, .btn-outline-light,
+  .lightbox-close, .hero-inner, .site-splash, .stat-cell, .site-crest,
+  .btn-gold, .hx-btn-gold, .btn-accent-lite, .notice-chip, .gallery-item figcaption,
+  .footer-brand, .footer-col h4, .about-media-card, .back-top, .d8-top, .d8-band,
+  .hx-brand.light .hx-brand-t strong, .hx-brand.dark .hx-brand-t strong,
+  .hx-btn-outline-light, .hx-btn-primary, .hx-burger.light, .hx-crest,
+  .hx-footer h4, .hx-shot figcaption, .hx-table th, .hx-chips.dark .hx-chip,
+  .program-tab.active, .login-tab.active, .design-num, .designs-head,
+  .designs-head .hx-chip,
+  .d3-banner-in h2, .d4-hero-in h1, .d5-nav a:hover, .d5-tile-copy h1,
+  .d5-tile.gold, .d5-tile.navy, .d6-hero-copy h1, .d6 h2, .d6 h3, .d6 h4,
+  .d6 .faq-q, .d6-nav a:hover, .d6-about-photo figcaption, .d6-contact .hx-btn-outline,
+  .d6-contact .hx-card h3, .d6-contact .hx-crow strong, .d6-facts.wide strong,
+  .d6-form-holder .hx-form-card h3, .d6-req h4, .d6-step h3, .d6-term h4,
+  .d6-panel h3, .d6 .hx-term-rows strong, .d6 .hx-event strong, .d6 .hx-notice strong,
+  .d7-hero-copy h1, .d7-photo figcaption, .d7-stats .hx-stat-v, .d7-sticky
+) { color: #f5f5f2; }
+
+/* the maroon chips: maroon on near-black would be unreadable, so soften it */
+:root[data-mode="dark"] .hs-chip,
+:root[data-mode="dark"] .hx-chip { color: #f0d7dc; }
+
+
+/* ------------------------- anchored section offset ----------------------- */
+/* Designs 1–8 use a fixed header, so a #section link must stop below it.
+   controls.js measures the header and sets --flc-anchor-offset; 96px is the
+   fallback if scripting is off. Designs 1–2 keep their own 78px rule.        */
+[id] { scroll-margin-top: var(--flc-anchor-offset, 96px); }
+.hx-anchor { display: block; height: 0; }
+
+/* ---------------------------------- toast --------------------------------- */
+.flc-toast {
+  position: fixed;
+  right: 1.1rem;
+  bottom: 1.1rem;
+  z-index: 400;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: min(92vw, 380px);
+  padding: 0.75rem 0.95rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-left: 3px solid var(--gold-500, #e4002b);
+  background: #141316;
+  color: #f5f5f2;
+  font: 500 0.86rem/1.35 var(--sans);
+  box-shadow: 0 22px 44px -22px rgba(0, 0, 0, 0.75);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+.flc-toast.show { opacity: 1; transform: translateY(0); }
+.flc-toast.error { border-left-color: #b00021; }
+
+/* --------------------------- header control group ------------------------- */
+.flc-controls-slot { display: inline-flex; align-items: center; }
+.flc-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+.flc-ctl {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 0.5rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: transparent;
+  color: inherit;
+  font: 600 0.78rem/1 var(--sans);
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+.flc-ctl:hover { background: rgba(255, 255, 255, 0.14); }
+.flc-ctl:focus-visible { outline: 2px solid var(--gold-500, #e4002b); outline-offset: 2px; }
+.flc-ctl svg { width: 15px; height: 15px; display: block; }
+.flc-ctl-text { padding: 0 0.7rem; }
+.flc-ctl[hidden] { display: none; }
+.flc-ctl.spinning svg { animation: flc-spin 0.7s linear infinite; }
+@keyframes flc-spin { to { transform: rotate(360deg); } }
+
+/* the buttons sit on white chrome in these headers, so they need dark ink */
+:root[data-mode="dark"] .flc-ctl,
+.d8-header-in .flc-ctl,
+.hx-header-in .flc-ctl,
+.hx-nav .flc-ctl,
+.hs-header:not(.dark):not(.stay-dark) .flc-ctl,
+.d3-nav .flc-ctl,
+.site-header.scrolled .flc-ctl,
+.d8-top .flc-ctl { color: inherit; }
+.d8-header-in .flc-ctl,
+.hx-header-in .flc-ctl,
+.hx-nav .flc-ctl,
+.hs-header:not(.dark):not(.stay-dark) .flc-ctl,
+.d3-nav .flc-ctl,
+.site-header.scrolled .flc-ctl {
+  border-color: var(--slate-300);
+  color: var(--navy-900);
+}
+.d8-header-in .flc-ctl:hover,
+.hx-header-in .flc-ctl:hover,
+.hx-nav .flc-ctl:hover,
+.hs-header:not(.dark):not(.stay-dark) .flc-ctl:hover,
+.d3-nav .flc-ctl:hover,
+.site-header.scrolled .flc-ctl:hover { background: rgba(20, 19, 22, 0.06); }
+:root[data-mode="dark"] .d8-header-in .flc-ctl:hover,
+:root[data-mode="dark"] .hx-header-in .flc-ctl:hover,
+:root[data-mode="dark"] .hx-nav .flc-ctl:hover,
+:root[data-mode="dark"] .hs-header .flc-ctl:hover,
+:root[data-mode="dark"] .d3-nav .flc-ctl:hover,
+:root[data-mode="dark"] .site-header.scrolled .flc-ctl:hover { background: rgba(255, 255, 255, 0.12); }
+
+@media (max-width: 720px) {
+  .flc-controls { margin-left: 0.25rem; gap: 0.2rem; }
+  /* Icons only on a phone — but every control stays on screen and tappable. */
+  .flc-ctl .flc-ctl-label { display: none; }
+  .flc-ctl { min-width: 38px; height: 38px; padding: 0 0.45rem; }
+  .flc-ctl svg { width: 17px; height: 17px; }
+  .flc-ctl-logout svg { display: block; }
+}

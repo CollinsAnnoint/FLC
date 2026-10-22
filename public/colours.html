@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Colour combinations — FAITH LEARNING CENTRE</title>
+  <link rel="stylesheet" href="/rubik.css?v=1" />
+  <link rel="stylesheet" href="/styles.css?v=18" />
+  <link rel="stylesheet" href="/site.css?v=18" />
+  <link rel="stylesheet" href="/homes.css?v=18" />
+  <link rel="stylesheet" href="/mode.css?v=18" />
+  <script src="/controls.js?v=18"></script>
+  <meta name="theme-color" content="#141316" />
+<link rel="manifest" href="/manifest.json" />
+<link rel="apple-touch-icon" href="/assets/icon-192.png" />
+<link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+</head>
+<body class="public-site">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="hx-header">
+    <div class="hx-in hx-header-in">
+      <a class="hx-brand" href="/">
+        <span class="hx-crest" data-brand-mark="shield" data-brand-size="30"></span>
+        <span class="hx-brand-t"><strong>FAITH LEARNING CENTRE</strong><em>Colour combinations</em></span>
+      </a>
+      <nav class="hx-nav" style="margin-left:auto">
+        <a href="/">View the live website</a>
+        <a href="/designs">Home page designs</a>
+        <a href="/app">Open school portal</a>
+        <span class="flc-controls-slot" data-flc-controls></span>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1" style="padding-top:64px">
+    <section style="background:linear-gradient(180deg, var(--navy-800), var(--navy-950)); color:#fff; padding:2.6rem 0 2.2rem;">
+      <div class="hx-in">
+        <span class="hx-kick light">Backend customization zone · Visual theme</span>
+        <h1 style="font-family:var(--serif); font-size:clamp(1.5rem,3vw,2.1rem);">Seven colour combinations to choose from</h1>
+        <p class="hx-lead light" style="max-width:860px;">
+          Each combination repaints the whole system — the four portals, the public website, all eight home page
+          designs, the documents and the login screens. Preview any of them live on the real website, then press
+          <em>Apply</em> to make it the school's colour. Nothing changes until you apply.
+        </p>
+        <div id="current-theme" class="hx-chips dark" style="margin-top:1rem"></div>
+      </div>
+    </section>
+
+    <div class="hx-in" style="padding:1.8rem 0 3.5rem;">
+      <div id="option-grid" class="designs-grid"></div>
+
+      <div class="designs-note">
+        <strong>How to change the colour later.</strong>
+        Backend Customization Zone → Branding → <em>Primary / Accent Colour</em> and <em>Sidebar Theme</em> still let you
+        mix any two colours by hand, and the Quick Theme Presets there apply these same combinations in one click.
+        This page is simply the fastest way to compare them on the live site.
+      </div>
+    </div>
+  </main>
+
+  <footer class="hx-footer">
+    <div class="hx-in hx-fbottom" style="border-top:none">
+      <span>© <span id="year">2026</span> FAITH LEARNING CENTRE. All rights reserved.</span>
+      <span class="hx-fcredit">Photographs: Wikimedia Commons, openly licensed — see /assets/CREDITS.md</span>
+    </div>
+  </footer>
+
+  <div id="toast-root" class="toast-container"></div>
+
+  <script src="/version.js"></script>
+
+  <script src="/brand.js?v=18"></script>
+  <script src="/app.js?v=18"></script>
+  <script src="/themes.js?v=18"></script>
+  <script>
+    document.getElementById("year").textContent = String(new Date().getFullYear());
+
+    function swatch(t) {
+      return `<span style="display:block;height:26px;border-radius:6px;background:${t}"></span>`;
+    }
+
+    (async function () {
+      const live = await fetch("/api/bootstrap").then((r) => r.json()).catch(() => null);
+      const b = live ? live.systemConfig.branding : {};
+      const current = (b.primaryColor || "").toLowerCase();
+      document.getElementById("current-theme").innerHTML =
+        `<span class="hx-chip">Live now: primary ${b.primaryColor}, accent ${b.accentColor}, sidebar ${b.sidebarTheme}</span>
+         <span class="hx-chip">Home page design ${b.homeDesign}</span>`;
+
+      document.getElementById("option-grid").innerHTML = FLCThemes.THEMES.map((theme) => {
+        const t = theme.tokens;
+        const isCurrent = t.navy900.toLowerCase() === current;
+        return `
+        <article class="design-card ${isCurrent ? "active" : ""}" data-theme="${theme.id}">
+          <div style="display:flex;height:74px;">
+            ${swatch(t.navy950)}${swatch(t.navy900)}${swatch(t.navy800)}${swatch(t.gold500)}${swatch(t.gold100)}
+          </div>
+          <div class="design-body">
+            <div class="design-title">
+              <h3>${theme.name}</h3>
+              <span class="design-tone">${theme.tone}</span>
+            </div>
+            <p>${theme.blurb}</p>
+            <div class="hx-tags">
+              <span class="hx-tag">${t.navy900}</span>
+              <span class="hx-tag">${t.gold500}</span>
+              <span class="hx-tag">sidebar: ${theme.sidebar}</span>
+            </div>
+            <div class="design-actions">
+              <a class="hx-btn hx-btn-primary" href="/?theme=${theme.id}" target="_blank" rel="noopener"
+                 onclick="FLCThemes.applyTokens(${JSON.stringify(theme).replace(/"/g, "&quot;")})">Preview on the website</a>
+              <a class="hx-btn hx-btn-outline" href="/app?theme=${theme.id}" target="_blank" rel="noopener">Preview in the portals</a>
+              <button class="hx-btn hx-btn-gold" onclick="FLCThemes.apply('${theme.id}')">
+                ${isCurrent ? "Re-apply this colour" : "Apply this colour"}
+              </button>
+            </div>
+            ${isCurrent ? '<div class="design-current">Currently live</div>' : ""}
+          </div>
+        </article>`;
+      }).join("");
+    })();
+  </script>
+</body>
+</html>

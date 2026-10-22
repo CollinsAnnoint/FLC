@@ -1,0 +1,9 @@
+# FAITH LEARNING CENTRE — public website
+User-agent: *
+Allow: /
+Disallow: /app
+Disallow: /designs
+Disallow: /colours
+Disallow: /api/
+
+Sitemap: /sitemap.xml

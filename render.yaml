@@ -1,0 +1,28 @@
+# Render Blueprint — Faith Learning Centre ERP & Public Website
+# Deploy with 1 click: Render Dashboard -> New + -> Blueprint -> select this repo.
+#
+# By default this Blueprint deploys on Render's Free plan (zero cost).
+# For permanent on-disk persistence across redeploys (Starter plan), uncomment
+# the `disk` section and the `FLC_DB_PATH` environment variable below.
+
+services:
+  - type: web
+    name: faith-learning-centre
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Uncomment when a Render Persistent Disk is attached at /var/data:
+      # - key: FLC_DB_PATH
+      #   value: /var/data/db.json
+
+    # Uncomment on Render Starter plan ($7/mo) to persist data/db.json and backups
+    # across deploys and container restarts:
+    # disk:
+    #   name: flc-data
+    #   mountPath: /var/data
+    #   sizeGB: 1
